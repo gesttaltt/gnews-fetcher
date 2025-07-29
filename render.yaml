@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: gnews-fetcher
+    runtime: docker
+    dockerfilePath: ./app/Dockerfile
+    dockerContext: ./app
+    region: oregon
+    plan: free
+    branch: main
+    healthCheckPath: /
+    envVars:
+      - key: GNEWS_API_KEY
+        sync: false  # This will be set manually in Render dashboard
+    scaling:
+      minInstances: 1
+      maxInstances: 1
