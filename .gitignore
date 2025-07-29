@@ -201,6 +201,10 @@ cython_debug/
 .cursorignore
 .cursorindexingignore
 
+# AI Coding Agent Instructions
+#  Local development context files for AI agents - keep in local environment only
+.github/copilot-instructions.md
+
 # Marimo
 marimo/_static/
 marimo/_lsp/
