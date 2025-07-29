@@ -1,4 +1,3 @@
-from news_app.api import app
 import pytest
 import sys
 import os
@@ -6,6 +5,9 @@ from fastapi.testclient import TestClient
 
 # Add the app directory to the Python path
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'app'))
+
+# Import after path setup
+from news_app.api import app
 
 
 @pytest.fixture

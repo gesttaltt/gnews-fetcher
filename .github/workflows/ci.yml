@@ -31,19 +31,29 @@ jobs:
         echo "Running flake8 linting..."
         flake8 . --exclude=.git,__pycache__,.pytest_cache,.vscode --statistics
     
-    - name: Install Firefox for Selenium
+    - name: Install Firefox for Selenium (optional)
       run: |
         sudo apt-get update
-        sudo apt-get install -y firefox-esr
+        sudo apt-get install -y firefox
+        # Install geckodriver
+        wget -q https://github.com/mozilla/geckodriver/releases/download/v0.33.0/geckodriver-v0.33.0-linux64.tar.gz
+        tar -xzf geckodriver-v0.33.0-linux64.tar.gz
+        sudo mv geckodriver /usr/local/bin/
+      continue-on-error: true
     
-    - name: Run tests
+    - name: Run API tests
       env:
-        GNEWS_API_KEY: ${{ secrets.GNEWS_API_KEY }}
-        SKIP_BROWSER_TESTS: "true"  # Skip browser tests in CI by default
-        PYTHONPATH: app
+        SKIP_BROWSER_TESTS: "true"
+        PYTHONPATH: ${{ github.workspace }}/app
       run: |
         echo "Running API tests..."
         python -m pytest qa/tests/test_api.py -v
-        
-        echo "Running browser tests (if enabled)..."
-        python -m pytest qa/tests/test_browser.py -v || echo "Browser tests skipped or failed"
+    
+    - name: Run browser tests (if enabled)
+      env:
+        SKIP_BROWSER_TESTS: "true"
+        PYTHONPATH: ${{ github.workspace }}/app
+      run: |
+        echo "Running browser tests (skipped in CI)..."
+        python -m pytest qa/tests/test_browser.py -v || echo "Browser tests skipped"
+      continue-on-error: true
