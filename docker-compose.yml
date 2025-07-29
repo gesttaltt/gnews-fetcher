@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  gnews-fetcher:
+    build:
+      context: ./app
+      dockerfile: Dockerfile
+    ports:
+      - "${PORT:-8000}:8000"
+    environment:
+      - GNEWS_API_KEY=${GNEWS_API_KEY}
+    volumes:
+      - ./app:/app
+    restart: unless-stopped

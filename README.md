@@ -1,4 +1,12 @@
-# News Fetcher
+# GNews Fetcher
+
+[![CI](htt1. **QA Automation skills** – solid unit + browser tests running on every push.  
+2. **Modern Python stack** – FastAPI, type hints, Docker, GitHub Actions.  
+3. **Real‑world troubleshooting** – originally used NewsAPI.org, but its free tier blocks remote calls (403). I pivoted to **GNews.io**, updated the adapter, and kept the tests/CI green without a full rewrite.//github.com/gesttaltt/gnews-fetcher/actions/workflows/ci.yml/badge.svg)](https://github.com/gesttaltt/gnews-fetcher/actions/workflows/ci.yml)  
+[![Python 3.11](https://img.shields.io/badge/python-3.11-blue.svg)](https://www.python.org/downloads/release/python-3110/)  
+[![License MIT](https://img.shields.io/github/license/gesttaltt/gnews-fetcher)](LICENSE)
+
+A clean, well‑structured FastAPI application that fetches real AI news using **GNews.io** and serves them through an HTTP API. It ships with automated QA testing (pytest + Selenium), Docker support and a CI/CD pipeline on GitHub Actions.Fetcher
 
 [![CI](https://github.com/gesttaltt/news-fetcher/actions/workflows/ci.yml/badge.svg)](https://github.com/gesttaltt/news-fetcher/actions/workflows/ci.yml)  
 [![Python 3.11](https://img.shields.io/badge/python-3.11-blue.svg)](https://www.python.org/downloads/release/python-3110/)  
@@ -49,8 +57,8 @@ I wanted a compact, production‑grade project to showcase:
 ### Clone & Set Up
 
 ```bash
-git clone https://github.com/gesttaltt/news-fetcher.git
-cd news-fetcher
+git clone https://github.com/gesttaltt/gnews-fetcher.git
+cd gnews-fetcher
 pip install -r requirements.txt
 echo "GNEWS_API_KEY=your_token_here" > .env
 cd app
@@ -115,7 +123,7 @@ flake8 .                      # lint
 ## Project Structure
 
 ```text
-news-fetcher/
+gnews-fetcher/
 ├── README.md
 ├── requirements.txt
 ├── docker-compose.yml
@@ -126,7 +134,10 @@ news-fetcher/
 │   ├── requirements.txt
 │   └── news_app/
 │       ├── __init__.py
-│       └── api.py
+│       ├── api.py
+│       └── providers/
+│           ├── __init__.py
+│           └── gnews.py
 └── qa/
     ├── browser_checks.py
     ├── conftest.py
