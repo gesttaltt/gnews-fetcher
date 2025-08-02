@@ -23,14 +23,6 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
     
-    - name: Code quality checks
-      run: |
-        echo "Running code formatting check..."
-        autopep8 --diff --recursive --aggressive --aggressive . --exclude=.git,__pycache__,.pytest_cache,.vscode
-        
-        echo "Running flake8 linting..."
-        flake8 . --exclude=.git,__pycache__,.pytest_cache,.vscode --statistics
-    
     - name: Install Firefox for Selenium (optional)
       run: |
         sudo apt-get update
@@ -41,19 +33,5 @@ jobs:
         sudo mv geckodriver /usr/local/bin/
       continue-on-error: true
     
-    - name: Run API tests
-      env:
-        SKIP_BROWSER_TESTS: "true"
-        PYTHONPATH: ${{ github.workspace }}/app
-      run: |
-        echo "Running API tests..."
-        python -m pytest qa/tests/test_api.py -v
-    
-    - name: Run browser tests (if enabled)
-      env:
-        SKIP_BROWSER_TESTS: "true"
-        PYTHONPATH: ${{ github.workspace }}/app
-      run: |
-        echo "Running browser tests (skipped in CI)..."
-        python -m pytest qa/tests/test_browser.py -v || echo "Browser tests skipped"
-      continue-on-error: true
+    - name: Run full QA pipeline
+      run: ./ci.sh
