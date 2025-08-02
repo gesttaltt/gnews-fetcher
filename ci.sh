@@ -31,6 +31,23 @@ print_error() {
     echo -e "${RED}❌ $1${NC}"
 }
 
+# Install Firefox and geckodriver for Selenium (if not already installed)
+print_step "Setting up browser testing environment..."
+if ! command -v firefox >/dev/null 2>&1; then
+    echo "Installing Firefox..."
+    sudo apt-get update >/dev/null 2>&1
+    sudo apt-get install -y firefox >/dev/null 2>&1
+fi
+
+if ! command -v geckodriver >/dev/null 2>&1; then
+    echo "Installing geckodriver..."
+    wget -q https://github.com/mozilla/geckodriver/releases/download/v0.33.0/geckodriver-v0.33.0-linux64.tar.gz
+    tar -xzf geckodriver-v0.33.0-linux64.tar.gz
+    sudo mv geckodriver /usr/local/bin/
+    rm -f geckodriver-v0.33.0-linux64.tar.gz
+fi
+print_success "Browser environment ready!"
+
 # Step 1: Code formatting check
 print_step "Running autopep8 diff check..."
 if autopep8 --diff --recursive --aggressive --aggressive . --exclude=.git,__pycache__,.pytest_cache,.vscode | grep -q .; then
