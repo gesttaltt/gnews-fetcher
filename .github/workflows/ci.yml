@@ -29,10 +29,17 @@ jobs:
     - name: Cache geckodriver
       uses: actions/cache@v3
       with:
-        path: ~/.wdm
+        path: |
+          ~/.cache/selenium
+          ~/.wdm
         key: ${{ runner.os }}-geckodriver-${{ hashFiles('**/requirements*.txt') }}
         restore-keys: |
           ${{ runner.os }}-geckodriver-
+    
+    - name: Ensure selenium cache directory exists
+      run: |
+        mkdir -p ~/.cache/selenium
+        mkdir -p ~/.wdm
     
     - name: Install dependencies
       run: |
@@ -41,8 +48,13 @@ jobs:
     
     - name: Install Firefox for browser tests
       run: |
+        sudo snap remove firefox || true
         sudo apt-get update
         sudo apt-get install -y firefox
+    
+    - name: Pre-download geckodriver for cache
+      run: |
+        python -c "from webdriver_manager.firefox import GeckoDriverManager; GeckoDriverManager().install()"
     
     - name: Run full QA pipeline with browser tests
       run: |
