@@ -29,10 +29,10 @@ jobs:
     - name: Cache geckodriver
       uses: actions/cache@v3
       with:
-        path: ~/.cache/geckodriver
-        key: ${{ runner.os }}-gecko
+        path: ~/.wdm
+        key: ${{ runner.os }}-geckodriver-${{ hashFiles('**/requirements*.txt') }}
         restore-keys: |
-          ${{ runner.os }}-gecko-
+          ${{ runner.os }}-geckodriver-
     
     - name: Install dependencies
       run: |
