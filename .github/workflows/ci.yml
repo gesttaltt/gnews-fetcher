@@ -59,6 +59,12 @@ jobs:
     - name: Run full QA pipeline with browser tests
       run: |
         chmod +x ci.sh
-        SKIP_BROWSER_TESTS=false ./ci.sh
+        if [ -n "$GNEWS_API_KEY" ]; then
+          echo "✅ API key available - running full tests"
+          SKIP_BROWSER_TESTS=false ./ci.sh
+        else
+          echo "⚠️  No API key - running tests without real API calls"
+          SKIP_BROWSER_TESTS=false ./ci.sh
+        fi
       env:
         GNEWS_API_KEY: ${{ secrets.GNEWS_API_KEY }}
