@@ -39,7 +39,14 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
     
-    - name: Run full QA pipeline
+    - name: Install Firefox for browser tests
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y firefox
+    
+    - name: Run full QA pipeline with browser tests
       run: |
         chmod +x ci.sh
-        ./ci.sh
+        SKIP_BROWSER_TESTS=false ./ci.sh
+      env:
+        GNEWS_API_KEY: ${{ secrets.GNEWS_API_KEY }}
