@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT
 """
 GNews.io API provider for fetching news articles.
 """

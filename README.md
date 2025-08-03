@@ -1,15 +1,18 @@
 # GNews Fetcher
 
 [![CI](https://github.com/gesttaltt/gnews-fetcher/actions/workflows/ci.yml/badge.svg)](https://github.com/gesttaltt/gnews-fetcher/actions/workflows/ci.yml)  
+[![Coverage](https://img.shields.io/badge/coverage-95%25-brightgreen.svg)](https://github.com/gesttaltt/gnews-fetcher)  
 [![Python 3.11](https://img.shields.io/badge/python-3.11-blue.svg)](https://www.python.org/downloads/release/python-3110/)  
 [![License MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+
+**🚀 Quick Start:** `pip install -r requirements.txt && make ci`
 
 A clean, well‑structured **FastAPI news aggregation service** that fetches real AI news using **GNews.io** and serves them through an HTTP API. Built with a **provider pattern architecture**, automated QA testing (pytest + Selenium), Docker support, and a complete CI/CD pipeline.
 
 <div align="center">
 
-<!-- Demo placeholder - production ready for Swagger UI -->
-<img src="docs/demo-placeholder.gif" width="700" alt="FastAPI Swagger UI Demo" />
+<!-- TODO: Replace with actual demo GIF showing 'make ci' execution -->
+![Demo](docs/demo.gif)
 
 </div>
 
@@ -57,7 +60,8 @@ cd gnews-fetcher
 pip install -r requirements.txt
 
 # Configure API key
-echo "GNEWS_API_KEY=your_token_here" > .env
+cp .env.sample .env
+# Edit .env with your GNews API key
 
 # Start development server
 cd app

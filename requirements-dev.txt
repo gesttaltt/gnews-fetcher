@@ -1,0 +1,19 @@
+# Development and testing dependencies
+# Install with: pip install -r requirements-dev.txt
+
+# Testing framework
+pytest==7.4.3
+httpx==0.25.2
+
+# Browser automation
+selenium==4.15.2
+webdriver-manager==4.0.1
+
+# Code quality
+flake8==6.1.0
+autopep8==2.0.4
+coverage==7.3.2
+
+# Additional development tools
+black==23.12.1
+isort==5.13.2

@@ -69,7 +69,6 @@ fi
 # Step 3: API tests (P0 - Critical)
 print_step "Running P0 API tests (mocked)..."
 export PYTHONPATH="${PWD}/app"
-export SKIP_BROWSER_TESTS="true"
 if python -m pytest qa/tests/test_api.py -v --tb=short; then
     print_success "P0 API tests passed!"
 else
@@ -78,13 +77,16 @@ else
 fi
 
 # Step 4: Browser tests (P1 - Integration) 
-print_step "Running P1 browser tests (headless)..."
-export SKIP_BROWSER_TESTS="false"
-if python -m pytest qa/tests/test_browser.py -v --tb=short; then
-    print_success "P1 browser tests passed!"
+if [ "${SKIP_BROWSER_TESTS:-false}" != "true" ]; then
+    print_step "Running P1 browser tests (headless)..."
+    if python -m pytest qa/tests/test_browser.py -v --tb=short; then
+        print_success "P1 browser tests passed!"
+    else
+        print_warning "P1 browser tests failed (continuing...)"
+        # Don't exit on browser test failure as they may be environment-dependent
+    fi
 else
-    print_warning "P1 browser tests failed (continuing...)"
-    # Don't exit on browser test failure as they may be environment-dependent
+    print_warning "Browser tests skipped (SKIP_BROWSER_TESTS=true)"
 fi
 
 # Step 5: Coverage analysis

@@ -205,6 +205,9 @@ cython_debug/
 #  Local development context files for AI agents - keep in local environment only
 .github/copilot-instructions.md
 
+# Documentation context (audit logs, implementation notes)
+docs/context/
+
 # Marimo
 marimo/_static/
 marimo/_lsp/

@@ -1,7 +1,7 @@
 # GNews Fetcher Makefile
 # Development and QA automation
 
-.PHONY: help install dev test ci clean coverage format lint
+.PHONY: help install dev test ci ci-fast clean coverage format lint
 
 # Default target
 help:
@@ -10,6 +10,7 @@ help:
 	@echo "  make dev        - Start development server"
 	@echo "  make test       - Run tests only"
 	@echo "  make ci         - Run full QA pipeline"
+	@echo "  make ci-fast    - Run QA pipeline (skip browser tests)"
 	@echo "  make coverage   - Run coverage analysis"
 	@echo "  make format     - Format code with autopep8"
 	@echo "  make lint       - Run linting checks"
@@ -30,6 +31,10 @@ test:
 # Run full QA pipeline (comprehensive)
 ci:
 	./ci.sh
+
+# Run fast QA pipeline (skip browser tests)
+ci-fast:
+	SKIP_BROWSER_TESTS=true ./ci.sh
 
 # Run coverage analysis
 coverage:

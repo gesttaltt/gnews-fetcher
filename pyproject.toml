@@ -1,0 +1,94 @@
+[tool.black]
+line-length = 88
+target-version = ['py311']
+include = '\.pyi?$'
+extend-exclude = '''
+/(
+  \.git
+  | \.pytest_cache
+  | __pycache__
+  | \.vscode
+)/
+'''
+
+[tool.isort]
+profile = "black"
+multi_line_output = 3
+line_length = 88
+known_first_party = ["news_app"]
+
+[tool.flake8]
+max-line-length = 88
+extend-ignore = ["E203", "W503"]
+exclude = [".git", "__pycache__", ".pytest_cache", ".vscode"]
+
+[tool.pytest.ini_options]
+testpaths = ["qa/tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = "-v --tb=short"
+
+[tool.coverage.run]
+source = ["app"]
+omit = ["*/__pycache__/*", "*/tests/*"]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "raise AssertionError",
+    "raise NotImplementedError",
+]
+
+[build-system]
+requires = ["setuptools>=45", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "gnews-fetcher"
+version = "1.0.0"
+description = "FastAPI news aggregation service using GNews.io with comprehensive QA testing"
+authors = [
+    {name = "Your Name", email = "your.email@example.com"}
+]
+license = {text = "MIT"}
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi==0.104.1",
+    "uvicorn==0.24.0",
+    "requests==2.31.0",
+    "python-dotenv==1.0.0",
+]
+keywords = ["fastapi", "news", "api", "gnews", "testing", "qa"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Environment :: Web Environment",
+    "Framework :: FastAPI",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Internet :: WWW/HTTP :: HTTP Servers",
+    "Topic :: Software Development :: Libraries :: Application Frameworks",
+]
+
+[project.urls]
+Homepage = "https://github.com/gesttaltt/gnews-fetcher"
+Repository = "https://github.com/gesttaltt/gnews-fetcher"
+Issues = "https://github.com/gesttaltt/gnews-fetcher/issues"
+
+[project.optional-dependencies]
+dev = [
+    "pytest==7.4.3",
+    "selenium==4.15.2",
+    "httpx==0.25.2",
+    "flake8==6.1.0",
+    "autopep8==2.0.4",
+    "coverage==7.3.2",
+    "black==23.12.1",
+    "isort==5.13.2",
+    "webdriver-manager==4.0.1",
+]

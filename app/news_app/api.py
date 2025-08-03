@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT
 from fastapi.responses import RedirectResponse
 import os
 from fastapi import FastAPI, HTTPException, Query

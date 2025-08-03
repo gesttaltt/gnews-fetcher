@@ -4,9 +4,5 @@ uvicorn==0.24.0
 requests==2.31.0
 python-dotenv==1.0.0
 
-# Development and testing dependencies
-pytest==7.4.3
-selenium==4.15.2
-httpx==0.25.2
-flake8==6.1.0
-autopep8==2.0.4
+# Development dependencies (can be split into requirements-dev.txt for cleaner production)
+-r requirements-dev.txt
