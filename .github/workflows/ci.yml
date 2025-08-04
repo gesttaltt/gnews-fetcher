@@ -14,12 +14,12 @@ jobs:
     - uses: actions/checkout@v4
     
     - name: Set up Python 3.11
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5
       with:
         python-version: '3.11'
     
     - name: Cache pip dependencies
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: ~/.cache/pip
         key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements*.txt') }}
@@ -27,7 +27,7 @@ jobs:
           ${{ runner.os }}-pip-
     
     - name: Cache geckodriver
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: |
           ~/.cache/selenium
@@ -75,7 +75,7 @@ jobs:
         GNEWS_API_KEY: ${{ secrets.GNEWS_API_KEY }}
     
     - name: Upload test results and coverage
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       if: always()
       with:
         name: qa-test-results
@@ -86,7 +86,7 @@ jobs:
         retention-days: 30
     
     - name: Upload coverage reports to Codecov
-      uses: codecov/codecov-action@v3
+      uses: codecov/codecov-action@v4
       if: always()
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
