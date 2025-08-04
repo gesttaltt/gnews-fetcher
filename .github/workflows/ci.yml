@@ -18,23 +18,26 @@ jobs:
       with:
         python-version: '3.11'
     
-    - name: Cache pip dependencies
+    - name: Cache Python dependencies
       uses: actions/cache@v4
       with:
-        path: ~/.cache/pip
-        key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements*.txt') }}
+        path: |
+          ~/.cache/pip
+          ~/.local/lib/python3.11/site-packages
+        key: ${{ runner.os }}-python-${{ hashFiles('**/requirements.txt') }}
         restore-keys: |
-          ${{ runner.os }}-pip-
+          ${{ runner.os }}-python-
     
-    - name: Cache geckodriver
+    - name: Cache browser dependencies
       uses: actions/cache@v4
       with:
         path: |
           ~/.cache/selenium
           ~/.wdm
-        key: ${{ runner.os }}-geckodriver-${{ hashFiles('**/requirements*.txt') }}
+          /opt/hostedtoolcache/Python/3.11.*/x64/lib/python3.11/site-packages/webdriver_manager
+        key: ${{ runner.os }}-browser-${{ hashFiles('**/requirements.txt') }}
         restore-keys: |
-          ${{ runner.os }}-geckodriver-
+          ${{ runner.os }}-browser-
     
     - name: Ensure selenium cache directory exists
       run: |
@@ -51,15 +54,23 @@ jobs:
         echo "🔍 Validating manual QA documentation..."
         python qa/manual/validate_manual_tests.py
     
-    - name: Install Firefox for browser tests
+    - name: Setup browser environment (optimized)
       run: |
-        sudo snap remove firefox || true
-        sudo apt-get update
+        echo "🌐 Setting up browser environment..."
+        # Remove snap firefox and install regular firefox
+        sudo snap remove firefox 2>/dev/null || true
+        sudo apt-get update -qq
         sudo apt-get install -y firefox
-    
-    - name: Pre-download geckodriver for cache
-      run: |
-        python -c "from webdriver_manager.firefox import GeckoDriverManager; GeckoDriverManager().install()"
+        
+        # Pre-download geckodriver with error handling
+        python -c "
+        try:
+            from webdriver_manager.firefox import GeckoDriverManager
+            driver_path = GeckoDriverManager().install()
+            print(f'✅ Geckodriver installed at: {driver_path}')
+        except Exception as e:
+            print(f'⚠️ Geckodriver install warning: {e}')
+        " || echo "Geckodriver setup completed with warnings"
     
     - name: Run full QA pipeline with browser tests
       run: |
@@ -73,6 +84,7 @@ jobs:
         fi
       env:
         GNEWS_API_KEY: ${{ secrets.GNEWS_API_KEY }}
+        PYTHONPATH: ${{ github.workspace }}/app
     
     - name: Upload test results and coverage
       uses: actions/upload-artifact@v4
