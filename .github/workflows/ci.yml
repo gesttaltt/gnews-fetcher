@@ -46,6 +46,11 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
     
+    - name: Validate manual testing documentation
+      run: |
+        echo "🔍 Validating manual QA documentation..."
+        python qa/manual/validate_manual_tests.py
+    
     - name: Install Firefox for browser tests
       run: |
         sudo snap remove firefox || true
@@ -68,3 +73,24 @@ jobs:
         fi
       env:
         GNEWS_API_KEY: ${{ secrets.GNEWS_API_KEY }}
+    
+    - name: Upload test results and coverage
+      uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: qa-test-results
+        path: |
+          .coverage
+          qa/reports/
+          htmlcov/
+        retention-days: 30
+    
+    - name: Upload coverage reports to Codecov
+      uses: codecov/codecov-action@v3
+      if: always()
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
+        files: .coverage
+        flags: unittests
+        name: gnews-fetcher-coverage
+        fail_ci_if_error: false

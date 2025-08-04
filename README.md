@@ -7,7 +7,7 @@
 
 **🚀 Quick Start:** `pip install -r requirements.txt && make ci`
 
-A clean, well‑structured **FastAPI news aggregation service** that fetches real AI news using **GNews.io** and serves them through an HTTP API. Built with a **provider pattern architecture**, automated QA testing (pytest + Selenium), Docker support, and a complete CI/CD pipeline.
+A **FastAPI news aggregation service** demonstrating **comprehensive QA methodologies** - combining **manual testing expertise** with automated validation for professional quality assurance.
 
 <div align="center">
 
@@ -18,26 +18,43 @@ A clean, well‑structured **FastAPI news aggregation service** that fetches rea
 
 ---
 
+## 🔍 Quality Assurance Focus
+
+This project showcases **professional QA practices** suitable for **manual testing roles** with technical growth potential:
+
+### **Manual Testing Excellence**
+- 📋 **[Test Plan](qa/manual/test_plan.md)**: 8 comprehensive test cases with priority classification
+- 🐛 **[Defect Tracking](qa/manual/defect_log.md)**: Professional bug lifecycle management
+- 🔍 **[Exploratory Testing](qa/manual/exploratory_testing.md)**: Session-based investigation methodology
+- 📊 **[QA Strategy](docs/QA_STRATEGY.md)**: Complete testing methodology documentation
+
+### **Automated Testing Integration**
+- **P0 Tests**: 12 API tests with mocked external dependencies
+- **P1 Tests**: 4 browser tests for end-to-end validation  
+- **CI/CD Pipeline**: Automated quality gates with manual QA validation
+- **94% Code Coverage**: Comprehensive test coverage metrics
+
 ## Why I built this 🥅
 
-A compact, production‑grade project showcasing:
+A demonstration of **professional QA methodologies** combining:
 
-1. **QA Automation expertise** – comprehensive unit + browser tests with 95%+ coverage
-2. **Modern Python architecture** – FastAPI, provider pattern, type hints, Docker deployment  
-3. **Real‑world adaptability** – originally NewsAPI, pivoted to GNews.io while maintaining test coverage and CI pipeline integrity
+1. **Manual Testing Expertise** – comprehensive test planning, defect management, and exploratory testing
+2. **Technical Growth Potential** – automation understanding with Selenium and CI/CD integration  
+3. **Real‑world Application** – functional news API with external service integration and proper error handling
+
+Perfect for showcasing **manual QA skills** with **automation learning capabilities**.
 
 ---
 
 ## Features
 
+- **📋 Manual Test Suite** – 8 priority-classified test cases with execution tracking
+- **🐛 Professional Defect Management** – structured bug reporting and lifecycle tracking
+- **🔍 Exploratory Testing** – documented session-based investigation methodology
 - **🚀 FastAPI** REST service with auto-generated OpenAPI documentation
 - **📰 Live news** from GNews.io (100 requests/day free tier)
-- **🔧 Provider pattern** – easily swap news sources without breaking changes
-- **🧪 Comprehensive testing** – 12 API tests + 4 browser validation tests
-- **🐳 Docker & Compose** ready for containerized deployment
-- **⚙️ GitHub Actions CI** with automated code quality checks
-- **🛡️ Robust error handling** with proper HTTP status codes
-- **📋 Dual requirements** strategy for development vs production
+- **🧪 Automated Integration** – pytest + Selenium browser testing
+- **⚙️ CI/CD Pipeline** with manual QA validation and automated quality gates
 
 ---
 
@@ -119,6 +136,20 @@ GET /news?query=AI&limit=10&sort_by=publishedAt&language=en
 
 ## Development & Testing
 
+### Manual Testing (Primary QA Focus)
+```bash
+# 1. Start application for manual testing
+cd app && uvicorn news_app.api:app --reload
+
+# 2. Execute manual test cases
+# Follow: qa/manual/test_plan.md
+# Update: Test execution tracking table
+# Report: Use .github/ISSUE_TEMPLATE/bug_report.md
+
+# 3. Conduct exploratory testing
+# Document: qa/manual/exploratory_testing.md
+```
+
 ### Code Quality
 ```bash
 # Linting and formatting
@@ -126,7 +157,7 @@ flake8 . --exclude=.git,__pycache__,.pytest_cache,.vscode --statistics
 autopep8 --diff --recursive --aggressive --aggressive . --exclude=.git,__pycache__,.pytest_cache,.vscode
 ```
 
-### Testing Strategy
+### Automated Testing (CI/CD Integration)
 ```bash
 # P0 Critical tests (mocked APIs)
 PYTHONPATH=app python -m pytest qa/tests/test_api.py -v
@@ -134,14 +165,15 @@ PYTHONPATH=app python -m pytest qa/tests/test_api.py -v
 # P1 Browser integration tests
 SKIP_BROWSER_TESTS=false PYTHONPATH=app python -m pytest qa/tests/test_browser.py -v
 
-# All tests
+# All automated tests
 PYTHONPATH=app python -m pytest qa/tests/ -v
 ```
 
-**Test Coverage:**
-- **12 API tests** – parameter validation, error handling, provider integration
-- **4 browser tests** – Swagger UI accessibility, health endpoint validation
-- **Mocked external calls** – no real API requests during CI/CD
+**QA Coverage:**
+- **8 Manual Test Cases** – systematic test planning with priority classification
+- **12 Automated API Tests** – parameter validation, error handling, provider integration
+- **4 Browser Tests** – Swagger UI accessibility, health endpoint validation
+- **Professional Defect Management** – structured bug reporting and tracking
 
 ---
 

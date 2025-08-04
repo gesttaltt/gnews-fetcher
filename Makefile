@@ -6,15 +6,28 @@
 # Default target
 help:
 	@echo "GNews Fetcher - Available commands:"
+	@echo ""
+	@echo "🔧 Development:"
 	@echo "  make install    - Install dependencies"
 	@echo "  make dev        - Start development server"
-	@echo "  make test       - Run tests only"
+	@echo ""
+	@echo "🧪 Testing:"
+	@echo "  make test       - Run automated tests only"
 	@echo "  make ci         - Run full QA pipeline"
 	@echo "  make ci-fast    - Run QA pipeline (skip browser tests)"
+	@echo "  make manual     - Validate manual test documentation"
+	@echo ""
+	@echo "📊 Quality:"
 	@echo "  make coverage   - Run coverage analysis"
 	@echo "  make format     - Format code with autopep8"
 	@echo "  make lint       - Run linting checks"
 	@echo "  make clean      - Clean cache files"
+	@echo ""
+	@echo "📋 QA Documentation:"
+	@echo "  Manual test plan: qa/manual/test_plan.md"
+	@echo "  Defect tracking:  qa/manual/defect_log.md"
+	@echo "  Bug reporting:    .github/ISSUE_TEMPLATE/bug_report.md"
+	@echo "  QA strategy:      docs/QA_STRATEGY.md"
 
 # Install dependencies
 install:
@@ -35,6 +48,10 @@ ci:
 # Run fast QA pipeline (skip browser tests)
 ci-fast:
 	SKIP_BROWSER_TESTS=true ./ci.sh
+
+# Validate manual test documentation
+manual:
+	python qa/manual/validate_manual_tests.py
 
 # Run coverage analysis
 coverage:
